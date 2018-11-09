@@ -14,6 +14,7 @@ int main(){
     tablero=crearTablero();
     int desicion=0;
     initscr();
+    noecho();
     printw("1)Nivel 1\n2)Nivel 2\n3)Nivel 3\nIngrese el número correspondiente: ");
     //cin>>desicion;
     refresh();
@@ -21,10 +22,18 @@ int main(){
     while(desicion<0||desicion>3){
 
     }
-    
+    if(desicion==1){
+
+    }
+    if(desicion==2){
+
+    }
+    if(desicion==3){
+
+    }   
     //getch();
     endwin();
-    void llenar(tablero, 10, desicion); 
+    llenar(tablero, 10, desicion); 
     return 0;
 }
 
