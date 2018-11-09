@@ -8,11 +8,13 @@ using std::endl;
 
 Item*** crearTablero();
 void llenar(Item***,int,int);
+void iniciar(Item***,int);
+void free(Item***&);
 
 int main(){
     Item*** tablero=NULL;
     tablero=crearTablero();
-    int desicion;
+    char desicion;
     initscr();
     keypad(stdscr, true);
     noecho();
@@ -20,27 +22,58 @@ int main(){
     //cin>>desicion;
     refresh();
     desicion=getch();
-    refresh();
-   
-    //while(desicion<0||desicion>3){
-//	printw("Data not found");
-//	refresh();
-  //  }
+    //printw(desicion);
+    //refresh();
+    //cout<<endl;
+    while(desicion<49||desicion>51){
+	printw("Error, vuelva a escoger: ");
+	//cin>>desicion;
+        desicion=getch();
+        //cout<<endl;
+    }
   
     if(desicion==49){
-	printw("CMAMUT");
-	refresh();
+	llenar(tablero,10,desicion);
+        iniciar(tablero,10);
     }
-    if(desicion==2){
-
+    if(desicion==51){
+        llenar(tablero,10,desicion);
+        iniciar(tablero,10);
     }
-    if(desicion==3){
-
+    if(desicion==52){
+        llenar(tablero,10,desicion);
+        iniciar(tablero,10);
     }   
+    free(tablero);
     //getch();
     endwin();
-    llenar(tablero, 10, desicion); 
+    //llenar(tablero, 10, desicion); 
     return 0;
+}
+
+void free(Item***& tablero){
+    for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+            delete[] tablero;
+            tablero[i][j]=NULL; 
+        }
+    }
+    for(int i=0;i<10;i++){
+        delete[] tablero[i];
+        tablero[i]=NULL;
+    }
+    delete[] tablero;
+    tablero=NULL;
+}
+
+void iniciar(Item*** tablero,int size){
+    /*initscr();
+    keypad(stdscr,true);
+    noecho():
+    refresh();
+    endwin();*/
+    printw("ok");
+    refresh();
 }
 
 void llenar(Item*** tablero, int size, int desicion){
