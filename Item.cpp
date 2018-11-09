@@ -30,7 +30,7 @@ void Item::setCantGolpes(int cantGolpes){
 }
 
 int Item::getProxX(){
-	return getProxX;
+	return proxX;
 }
 
 void Item::setProxX(int proxX){
@@ -50,9 +50,9 @@ char Item::getTipo(){
 }
 
 void Item::setTipo(char tipo){
-	this->tipo=tipo
+	this->tipo=tipo;
 }
-void Item::moverBar(){
+/*void Item::moverBar(){
 	char temp = getch();
 	
 	if(temp = 'a'){
@@ -61,4 +61,4 @@ void Item::moverBar(){
 	if(temp = 'd'){
 
 	}
-}
+}*/

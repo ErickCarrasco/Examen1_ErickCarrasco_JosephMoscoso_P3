@@ -14,7 +14,7 @@ class Item{
 		char tipo;
 		//char direction;
 	public:	
-
+                Item();
 		//Getters y setters
 		int getLives();
 		void setLives(int);
