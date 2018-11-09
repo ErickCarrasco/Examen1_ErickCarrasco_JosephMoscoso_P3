@@ -44,14 +44,17 @@ int main(){
         llenar(tablero,10,desicion);
         iniciar(tablero,10);
     }   
-    free(tablero);
-    //getch();
+    //free(tablero);
+    printw("Ha terminado, cliquee xd");
+    getch();
+    refresh();
     endwin();
     //llenar(tablero, 10, desicion); 
     return 0;
 }
 
 void free(Item***& tablero){
+  if(tablero!=NULL){
     for(int i=0;i<10;i++){
         for(int j=0;j<10;j++){
             delete[] tablero;
@@ -64,6 +67,7 @@ void free(Item***& tablero){
     }
     delete[] tablero;
     tablero=NULL;
+  }
 }
 
 void iniciar(Item*** tablero,int size){
@@ -77,7 +81,9 @@ void iniciar(Item*** tablero,int size){
 }
 
 void llenar(Item*** tablero, int size, int desicion){
-
+	printw("SOS");
+	printw("\n");
+	refresh();
 }
 
 Item*** crearTablero(){
@@ -87,7 +93,7 @@ Item*** crearTablero(){
     }
     for(int i=0;i<10;i++){
         for(int j=0;j<10;j++){
-            tablero[i][j]=NULL;
+            tablero[i][j]=new Item[10];
         }
     }
     return tablero;
