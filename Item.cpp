@@ -5,6 +5,7 @@ Item::Item(){
 
 }
 
+Item::~Item(){}
 Item::Item(int lives, int sizeBar, int cantGolpes, int proxX, int proxY, char tipo){
     this->lives=lives;
     this->sizeBar=sizeBar;

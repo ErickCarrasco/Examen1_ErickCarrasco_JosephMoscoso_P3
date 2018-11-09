@@ -7,9 +7,10 @@ using std::endl;
 #include <ncurses.h>
 
 Item*** crearTablero();
-void llenar(Item***,int,int);
+Item*** llenar(Item***,int,int);
 void iniciar(Item***,int);
 void free(Item***&);
+void printMatrix(Item***);
 
 int main(){
     Item*** tablero=NULL;
@@ -33,8 +34,10 @@ int main(){
     }
   
     if(desicion==49){
-	llenar(tablero,10,desicion);
-        iniciar(tablero,10);
+	refresh();
+	tablero =llenar(tablero,10,desicion);
+	printMatrix(tablero);
+        //iniciar(tablero,10);
     }
     if(desicion==51){
         llenar(tablero,10,desicion);
@@ -52,6 +55,24 @@ int main(){
     //llenar(tablero, 10, desicion); 
     return 0;
 }
+
+void printMatrix(Item*** tablero){
+	start_color();
+	init_pair(1,COLOR_BLACK,COLOR_BLACK);
+
+	for(int i =0; i<9; i++){
+		for(int j = 0; j<9; j++){
+			if(tablero[i][j]->getTipo() == 'B'){
+				//start_color(1);
+				attron(COLOR_PAIR(1));
+				mvaddch(j, i, 'x');
+				//printw('x');
+				refresh();
+			}
+		}
+	}
+}
+
 
 void free(Item***& tablero){
   if(tablero!=NULL){
@@ -80,9 +101,14 @@ void iniciar(Item*** tablero,int size){
     refresh();
 }
 
-void llenar(Item*** tablero, int size, int desicion){
-	printw("SOS");
-	printw("\n");
+Item*** llenar(Item*** tablero, int size, int desicion){
+
+    	for(int i=0;i<10;i++){
+        	for(int j=0;j<10;j++){
+            		tablero[i][j]=new Item(3, 0, 0, i, j, 'B');
+        	}
+    	}
+	return tablero;	
 	refresh();
 }
 
