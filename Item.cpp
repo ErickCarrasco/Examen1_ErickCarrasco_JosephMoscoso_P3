@@ -5,6 +5,15 @@ Item::Item(){
 
 }
 
+Item::Item(int lives, int sizeBar, int cantGolpes, int proxX, int proxY, char tipo){
+    this->lives=lives;
+    this->sizeBar=sizeBar;
+    this->cantGolpes=cantGolpes;
+    this->proxX=proxX;
+    this->proxY=proxY;
+    this->tipo=tipo;
+}
+
 int Item::getLives(){
 	return lives;
 }

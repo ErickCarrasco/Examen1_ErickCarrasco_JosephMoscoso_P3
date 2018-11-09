@@ -15,6 +15,7 @@ class Item{
 		//char direction;
 	public:	
                 Item();
+                Item(int,int,int,int,int,char);
 		//Getters y setters
 		int getLives();
 		void setLives(int);
