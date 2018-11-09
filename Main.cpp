@@ -12,18 +12,24 @@ void llenar(Item***,int,int);
 int main(){
     Item*** tablero=NULL;
     tablero=crearTablero();
-    int desicion=0;
+    int desicion;
     initscr();
+    keypad(stdscr, true);
     noecho();
     printw("1)Nivel 1\n2)Nivel 2\n3)Nivel 3\nIngrese el número correspondiente: ");
     //cin>>desicion;
     refresh();
     desicion=getch();
-    while(desicion<0||desicion>3){
-
-    }
-    if(desicion==1){
-
+    refresh();
+   
+    //while(desicion<0||desicion>3){
+//	printw("Data not found");
+//	refresh();
+  //  }
+  
+    if(desicion==49){
+	printw("CMAMUT");
+	refresh();
     }
     if(desicion==2){
 
