@@ -36,6 +36,7 @@ int main(){
     if(desicion==49){
 	refresh();
 	tablero =llenar(tablero,10,desicion);
+        refresh();
 	printMatrix(tablero);
         //iniciar(tablero,10);
     }
@@ -69,6 +70,21 @@ void printMatrix(Item*** tablero){
 				//printw('x');
 				refresh();
 			}
+                        if(tablero[i][j]->getTipo() == 'v'){
+                                attron(COLOR_PAIR(2));
+                                mvaddch(j, i, ' ');
+                                refresh();
+                        }
+                        if(tablero[i][j]->getTipo() == 'p'){
+                                attron(COLOR_PAIR(3));
+                                mvaddch(j, i, '-');
+                                refresh();
+                        }
+                        if(tablero[i][j]->getTipo() == 's'){
+                                attron(COLOR_PAIR(4));
+                                mvaddch(j, i, '.');
+                                refresh();
+                        }
 		}
 	}
 }
@@ -102,14 +118,24 @@ void iniciar(Item*** tablero,int size){
 }
 
 Item*** llenar(Item*** tablero, int size, int desicion){
-
+        
     	for(int i=0;i<10;i++){
+                
         	for(int j=0;j<10;j++){
+                    if(i<=3){
             		tablero[i][j]=new Item(3, 0, 0, i, j, 'B');
-        	}
+        	    }
+                    if(i>3){
+                        tablero[i][j]=new Item(3, 0, 0, i, j, 'v');
+                    }
+                    if(i==9 && j>=3 && j<=7){
+                        tablero[i][j]=new Item(3, 0, 0, i, j, 'p');
+                    }
+                }
     	}
+        tablero[8][5]=new Item(3, 0, 0, 8, 5, 's');
 	return tablero;	
-	refresh();
+//	refresh();
 }
 
 Item*** crearTablero(){
