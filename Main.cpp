@@ -15,10 +15,22 @@ void printMatrix(Item***);
 int main(){
     Item*** tablero=NULL;
     tablero=crearTablero();
+
     char desicion;
     initscr();
     keypad(stdscr, true);
-    noecho();
+    echo();
+    char users_name[ 100 ];
+    addstr( "What is your name> " );
+    refresh();
+    getnstr( users_name, sizeof( users_name ) - 1 );
+
+    clear();
+
+    printw( "Bienvenido al juego :v %s!\n", users_name );
+    refresh();
+
+
     printw("1)Nivel 1\n2)Nivel 2\n3)Nivel 3\nIngrese el número correspondiente: ");
     //cin>>desicion;
     refresh();
@@ -34,10 +46,11 @@ int main(){
     }
   
     if(desicion==49){
-	refresh();
-	tablero =llenar(tablero,10,desicion);
-        refresh();
-	printMatrix(tablero);
+       clear();
+	   refresh();
+	   tablero =llenar(tablero,10,desicion);
+       refresh();
+	   printMatrix(tablero);
         //iniciar(tablero,10);
     }
     if(desicion==51){
@@ -47,9 +60,12 @@ int main(){
     if(desicion==52){
         llenar(tablero,10,desicion);
         iniciar(tablero,10);
-    }   
+    }
+    //clear(); 
+    //refresh();  
     //free(tablero);
-    printw("Ha terminado, cliquee xd");
+
+    printw("Ha terminado, presione cualquier boton");
     getch();
     refresh();
     endwin();
@@ -59,8 +75,10 @@ int main(){
 
 void printMatrix(Item*** tablero){
 	start_color();
-	init_pair(1,COLOR_BLACK,COLOR_BLACK);
-
+	init_pair(1,COLOR_MAGENTA,COLOR_MAGENTA);
+    init_pair(2,COLOR_BLACK,COLOR_BLACK);
+    init_pair(3,COLOR_WHITE,COLOR_WHITE);
+    init_pair(4,COLOR_RED,COLOR_RED);
 	for(int i =0; i<9; i++){
 		for(int j = 0; j<9; j++){
 			if(tablero[i][j]->getTipo() == 'B'){
@@ -70,23 +88,30 @@ void printMatrix(Item*** tablero){
 				//printw('x');
 				refresh();
 			}
-                        if(tablero[i][j]->getTipo() == 'v'){
-                                attron(COLOR_PAIR(2));
-                                mvaddch(j, i, ' ');
-                                refresh();
-                        }
-                        if(tablero[i][j]->getTipo() == 'p'){
-                                attron(COLOR_PAIR(3));
-                                mvaddch(j, i, '-');
-                                refresh();
-                        }
-                        if(tablero[i][j]->getTipo() == 's'){
-                                attron(COLOR_PAIR(4));
-                                mvaddch(j, i, '.');
-                                refresh();
-                        }
+            if(tablero[i][j]->getTipo() == 'v'){
+                attron(COLOR_PAIR(2));
+                mvaddch(j, i, '#');
+                refresh();
+            }
+            if(tablero[i][j]->getTipo() == 'p'){
+                attron(COLOR_PAIR(3));
+                mvaddch(j, i, 'Q');
+                refresh();
+            }
+            if(tablero[i][j]->getTipo() == 's'){
+                attron(COLOR_PAIR(4));
+                mvaddch(j, i, 's');
+                refresh();
+            }
 		}
 	}
+    printw("\n");
+    printw("\n");
+
+    attroff(COLOR_PAIR(1));
+    attroff(COLOR_PAIR(2));
+    attroff(COLOR_PAIR(3));
+    attroff(COLOR_PAIR(4));
 }
 
 
@@ -119,21 +144,30 @@ void iniciar(Item*** tablero,int size){
 
 Item*** llenar(Item*** tablero, int size, int desicion){
         
+    for(int j=0;j<10;j++){
+            
     	for(int i=0;i<10;i++){
-                
-        	for(int j=0;j<10;j++){
-                    if(i<=3){
-            		tablero[i][j]=new Item(3, 0, 0, i, j, 'B');
-        	    }
-                    if(i>3){
-                        tablero[i][j]=new Item(3, 0, 0, i, j, 'v');
-                    }
-                    if(i==9 && j>=3 && j<=7){
-                        tablero[i][j]=new Item(3, 0, 0, i, j, 'p');
-                    }
-                }
-    	}
-        tablero[8][5]=new Item(3, 0, 0, 8, 5, 's');
+            if(i<=3){
+        		tablero[j][i]=new Item(3, 0, 0, i, j, 'B');
+            }
+            if(i>3){
+                tablero[j][i]=new Item(3, 0, 0, i, j, 'v');
+            }
+            /*
+            if(j==9 && i>=3 && i<=7){
+                tablero[i][j]=new Item(3, 0, 0, i, j, 'p');
+            }
+            */
+        }
+	}
+    int colorbar=0;
+    int positzione=0;
+    while(colorbar<4){
+        colorbar++;
+        tablero[2+positzione][8]=new Item(3, 0, 0, 8, 5, 'p');
+        positzione++;
+    }
+    tablero[4][7]=new Item(3, 0, 0, 8, 5, 's');
 	return tablero;	
 //	refresh();
 }
