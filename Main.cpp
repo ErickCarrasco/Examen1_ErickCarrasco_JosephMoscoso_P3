@@ -17,6 +17,7 @@ Item*** llenar(Item***,int,int);
 void iniciar(Item***,int);
 void free(Item***&);
 void printMatrix(Item***);
+void moveSphere(Item***);
 
 int main(){
     Item*** tablero=NULL;
@@ -67,6 +68,7 @@ int main(){
        printw("\n");
        refresh();
        while(vidas>0){
+            noecho();
             refresh();
             int direction;
             direction=getch();
@@ -114,6 +116,7 @@ int main(){
                         positzione++;
                     }
                 }
+                //moveSphere(tablero);
                 
                 printMatrix(tablero);
                 refresh();
@@ -153,7 +156,7 @@ int main(){
                         positzione2--;
                     }
                 }
-                
+                //moveSphere(tablero);
                 printMatrix(tablero);
                 refresh();
 
@@ -163,18 +166,20 @@ int main(){
 
         //iniciar(tablero,10);
     }
-    if(desicion==51){
+    if(desicion==50){
         clear();
         printw("\n");
         printw("Proximamente");
+        printw("\n");
         refresh();
         //llenar(tablero,10,desicion);
         //iniciar(tablero,10);
     }
-    if(desicion==52){
+    if(desicion==51){
         clear();
         printw("\n");
         printw("Proximamente");
+        printw("\n");
         refresh();
         //llenar(tablero,10,desicion);
         //iniciar(tablero,10);
@@ -189,6 +194,35 @@ int main(){
     endwin();
     //llenar(tablero, 10, desicion); 
     return 0;
+}
+
+void moveSphere(Item*** tablero){
+    int originpoint1=0;
+    int originpoint2=0;
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            if (tablero[i][j]->getTipo() == 's'){
+                originpoint1=i;
+                originpoint2=j;
+            }
+        }
+    }
+    if(originpoint2-1>1 || originpoint2+1<8 || originpoint1-1>1 || originpoint1+1<8){
+        if (tablero[originpoint1][originpoint2+1]->getTipo() == 'p'){
+            tablero[originpoint1][originpoint2]=new Item(3, 0, 0, 0, 0, 'v');
+            tablero[originpoint1][originpoint2-1]=new Item(3, 0, 0, 8, 5, 's');
+        }
+        if (tablero[originpoint1][originpoint2-1]->getTipo() == 'B'){
+            tablero[originpoint1][originpoint2]=new Item(3, 0, 0, 0, 0, 'v');
+            tablero[originpoint1][originpoint2-1]=new Item(3, 0, 0, 0, 0, 'v');
+            tablero[originpoint1][originpoint2+1]=new Item(3, 0, 0, 8, 5, 's');
+        }
+        if (tablero[originpoint1][originpoint2-1]->getTipo() == 'v'){
+            tablero[originpoint1][originpoint2]=new Item(3, 0, 0, 0, 0, 'v');
+            tablero[originpoint1][originpoint2+1]=new Item(3, 0, 0, 8, 5, 's');
+            tablero[originpoint1][originpoint2-1]=new Item(3, 0, 0, 0, 0, 'v');
+        }
+    }
 }
 
 void printMatrix(Item*** tablero){
