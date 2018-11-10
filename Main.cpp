@@ -6,6 +6,12 @@ using std::endl;
 
 #include <ncurses.h>
 
+#include <string>
+using std::string;
+
+#include <sstream> 
+using std::stringstream;
+
 Item*** crearTablero();
 Item*** llenar(Item***,int,int);
 void iniciar(Item***,int);
@@ -20,14 +26,14 @@ int main(){
     initscr();
     keypad(stdscr, true);
     echo();
-    char users_name[ 100 ];
+    char user_name[ 100 ];
     addstr( "What is your name> " );
     refresh();
-    getnstr( users_name, sizeof( users_name ) - 1 );
+    getnstr( user_name, sizeof( user_name ) - 1 );
 
     clear();
 
-    printw( "Bienvenido al juego :v %s!\n", users_name );
+    printw( "Bienvenido al juego :v %s!\n", user_name );
     refresh();
 
 
@@ -39,27 +45,139 @@ int main(){
     //refresh();
     //cout<<endl;
     while(desicion<49||desicion>51){
-	printw("Error, vuelva a escoger: ");
-	//cin>>desicion;
+	   printw("Error, vuelva a escoger: ");
+	       //cin>>desicion;
         desicion=getch();
         //cout<<endl;
     }
   
     if(desicion==49){
+       int vidas=4;
        clear();
 	   refresh();
 	   tablero =llenar(tablero,10,desicion);
        refresh();
 	   printMatrix(tablero);
+       refresh();
+
+       printw("\n");
+       printw("Iniciando. Jugador: %s \n", user_name);
+       printw("\n");
+       printw("\n");
+       printw("\n");
+       refresh();
+       while(vidas>0){
+            refresh();
+            int direction;
+            direction=getch();
+            //Izquierda
+            int posicion_origen1=0;
+            int posicion_origen2=0;
+
+            //Derecha
+            int posicion_origen3=0;
+            int posicion_origen4=0;
+
+            //Value iz
+            int value_d=0;
+
+            //Value der
+            int value_i=0;
+            if (direction==97){
+                printw("\n");
+                printw("Movement left");
+                refresh();
+                //Capture origin point
+                for (int i = 0; i < 9; i++){
+                    for (int j = 0; j < 9; j++){
+                        if(tablero[i][j]->getTipo() == 'p'){
+                            if (value_d==0){
+                                posicion_origen1=i;
+                                posicion_origen2=j;
+                                value_d=1000;
+                            }
+                        }
+                    }
+                }
+
+                //Posicionar
+                if (posicion_origen1-1>=0){
+                    tablero[posicion_origen1+3][posicion_origen2]= new Item(3, 0, 0, posicion_origen2, posicion_origen1, 'v');
+                }
+                
+                if (posicion_origen1-1>=0){
+                    int reposition=0;
+                    int positzione=-1;
+                    while(reposition<4){
+                        reposition++;
+                        tablero[posicion_origen1+positzione][8]=new Item(3, 0, 0, 2, 8, 'p');
+                        positzione++;
+                    }
+                }
+                
+                printMatrix(tablero);
+                refresh();
+
+            }
+            if (direction==100){
+                printw("\n");
+                printw("Movement right");
+                printw("\n");
+                refresh();
+                //Capture origin point
+                for (int i = 0; i < 9; i++){
+                    for (int j = 0; j < 9; j++){
+                        if(tablero[i][j]->getTipo() == 'p'){
+                            if (value_i==0){
+                                posicion_origen3=i;
+                                posicion_origen4=j;
+                                value_i=1000;
+                            }
+                        }
+                    }
+                }
+                posicion_origen3=posicion_origen3+3;
+                posicion_origen4=posicion_origen4;
+
+                if (posicion_origen3+1<9){
+                    tablero[posicion_origen3-3][posicion_origen4]= new Item(3, 0, 0, posicion_origen4, posicion_origen3, 'v');
+                }
+                
+                //Posicionar 2
+                if (posicion_origen3+1<9){
+                    int reposition2=0;
+                    int positzione2=1;
+                    while(reposition2<4){
+                        reposition2++;
+                        tablero[posicion_origen3+positzione2][8]=new Item(3, 0, 0, 2, 8, 'p');
+                        positzione2--;
+                    }
+                }
+                
+                printMatrix(tablero);
+                refresh();
+
+                
+            }
+       }
+
         //iniciar(tablero,10);
     }
     if(desicion==51){
-        llenar(tablero,10,desicion);
-        iniciar(tablero,10);
+        clear();
+        printw("\n");
+        printw("Proximamente");
+        refresh();
+        //llenar(tablero,10,desicion);
+        //iniciar(tablero,10);
     }
     if(desicion==52){
-        llenar(tablero,10,desicion);
-        iniciar(tablero,10);
+        clear();
+        printw("\n");
+        printw("Proximamente");
+        refresh();
+        //llenar(tablero,10,desicion);
+        //iniciar(tablero,10);
     }
     //clear(); 
     //refresh();  
@@ -87,6 +205,7 @@ void printMatrix(Item*** tablero){
 				mvaddch(j, i, 'x');
 				//printw('x');
 				refresh();
+                
 			}
             if(tablero[i][j]->getTipo() == 'v'){
                 attron(COLOR_PAIR(2));
@@ -164,7 +283,7 @@ Item*** llenar(Item*** tablero, int size, int desicion){
     int positzione=0;
     while(colorbar<4){
         colorbar++;
-        tablero[2+positzione][8]=new Item(3, 0, 0, 8, 5, 'p');
+        tablero[2+positzione][8]=new Item(3, 0, 0, 2, 8, 'p');
         positzione++;
     }
     tablero[4][7]=new Item(3, 0, 0, 8, 5, 's');
